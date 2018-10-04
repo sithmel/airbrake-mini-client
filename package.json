@@ -1,7 +1,7 @@
 {
   "name": "airbrake-mini-client",
   "version": "0.0.0",
-  "description": "",
+  "description": "A lightweight alternative to airbrake-js.",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint . --fix",
