@@ -1,11 +1,15 @@
 {
   "name": "airbrake-mini-client",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "lint": "eslint . --fix",
     "test": "karma start --single-run --browsers ChromeHeadless test/karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tes/airbrake-mini-client.git"
   },
   "keywords": [],
   "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
@@ -27,5 +31,8 @@
     "mocha": "^5.2.0",
     "sinon": "^6.3.5",
     "webpack": "^4.20.2"
+  },
+  "dependencies": {
+    "object-assign": "^4.1.1"
   }
 }

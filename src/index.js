@@ -1,6 +1,20 @@
-module.export = function airbrakeMini (config) {
+var Reporter = require('./reporter')
 
+function AirbrakeMini (config) {
+  if (!(this instanceof AirbrakeMini)) {
+    return new AirbrakeMini(config)
+  }
+  this.reporter = config.reporter || new Reporter(config)
 }
+
+AirbrakeMini.prototype.notify = function notify (err) {
+  if (err instanceof Error) {
+
+  }
+  this.reporter.notify()
+}
+
+module.export = AirbrakeMini
 // {
 //   "id": "",
 //   "errors": [
