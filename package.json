@@ -33,6 +33,7 @@
     "webpack": "^4.20.2"
   },
   "dependencies": {
+    "error-stack-parser": "^2.0.2",
     "object-assign": "^4.1.1"
   }
 }
