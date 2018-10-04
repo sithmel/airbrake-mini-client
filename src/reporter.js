@@ -20,14 +20,17 @@ var NOTIFIER = {
 }
 
 function Reporter (config) {
-  this.host = config.host || DEFAULT_HOST
-  this.timeout = config.timeout || DEFAULT_TIMEOUT
+  if (!config.projectId || !config.projectKey) {
+    throw new Error('Both projectId and projectKey are mandatory')
+  }
   this.projectId = config.projectId
   this.projectKey = config.projectKey
+  this.host = config.host || DEFAULT_HOST
+  this.timeout = config.timeout || DEFAULT_TIMEOUT
   this.environment = config.environment || DEFAULT_ENVIRONMENT
 }
 
-Reporter.prototype.notify = function enrichPayload (payload) {
+Reporter.prototype.enrichPayload = function reporterEnrichPayload (payload) {
   var ctx = objectAssign({}, {
     notifier: NOTIFIER,
     userAgent: window.navigator.userAgent,
@@ -35,7 +38,7 @@ Reporter.prototype.notify = function enrichPayload (payload) {
     rootDirectory: window.location.protocol + '//' + window.location.host,
     language: 'JavaScript',
     environment: this.environment
-  }, payload.context)
+  }, payload.context || {})
 
   return objectAssign({}, payload, { context: ctx })
 }

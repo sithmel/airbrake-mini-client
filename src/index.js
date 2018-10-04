@@ -29,4 +29,4 @@ AirbrakeMini.prototype.notify = function notify (err) {
   this.reporter.notify(payload)
 }
 
-module.export = AirbrakeMini
+module.exports = AirbrakeMini
