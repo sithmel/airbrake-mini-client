@@ -27,6 +27,17 @@ Promise.resolve()
   })
 ```
 
+### Notify additional parameters
+```js
+  airbrakeMini.notify({
+    error: new Error('BOOM'),
+    context: { severity: 'warning' }
+    params: {}, // put here any field you want
+    environment: {}, // put here any field you want
+    session: {} // put here any field you want
+  })
+```
+
 ### Configuration
 AirbrakeMini constructor takes the following mandatory parameter:
 * projectId
