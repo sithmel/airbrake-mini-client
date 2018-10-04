@@ -44,6 +44,6 @@ describe('reporter', () => {
     assert.equal(requests.length, 1)
     assert.equal(requests[0].url, 'https://api.airbrake.io/api/v3/projects/123/notices?key=456')
     assert.equal(requests[0].method, 'POST')
-    assert.equal(requests[0].requestBody.test, 1)
+    assert.equal(JSON.parse(requests[0].requestBody).test, 1)
   })
 })

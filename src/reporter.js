@@ -102,7 +102,7 @@ Reporter.prototype.notify = function reporterNotify (payload) {
     console.log('airbrake: xhr: unexpected response: code=' + req.status + 'body=' + body)
   }
 
-  req.send(enrichedPayload)
+  req.send(JSON.stringify(enrichedPayload))
 }
 
 module.exports = Reporter
