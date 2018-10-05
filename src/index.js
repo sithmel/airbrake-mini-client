@@ -7,9 +7,10 @@ function AirbrakeMini (config) {
     return new AirbrakeMini(config)
   }
   this.reporter = config.reporter || new Reporter(config)
+  this.filters = []
 }
 
-AirbrakeMini.prototype.notify = function notify (err) {
+AirbrakeMini.prototype.notify = function airbrakeMiniNotify (err) {
   var payload = {
     id: '',
     context: {
@@ -30,7 +31,23 @@ AirbrakeMini.prototype.notify = function notify (err) {
     objectAssign(payload.params, err.params || {})
     objectAssign(payload.session, err.session || {})
   }
-  this.reporter.notify(payload)
+  var filteredPayload = this._filter(payload)
+  if (filteredPayload) {
+    this.reporter.notify(filteredPayload)
+  }
+}
+
+AirbrakeMini.prototype._filter = function _airbrakeFilter (payload) {
+  for (var i = 0; i < this.filters.length; i++) {
+    payload = this.filters[i](payload)
+    if (!payload) break
+  }
+  return payload
+}
+
+AirbrakeMini.prototype.addFilter = function airbrakeMiniAddFilter (func) {
+  this.filters.push(func)
+  return this
 }
 
 module.exports = AirbrakeMini

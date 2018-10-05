@@ -51,7 +51,26 @@ These other paramenters are mostly for testing:
 * host: it defaults to airbrake host
 * reporter: an object providing a "notify" method
 
-### Airbrake payload example:
+### Filters
+You can use this feature to avoid sending an error to the server if it matches some criteria. You can also use this function to enrich the notice with specific informations. You can add as many filters you want. The method is chainable.
+```js
+  airbrakeMini.addFilter((notice) => {
+    // if I return null, the notice gets discarded
+    // I can also mutate the notice to add some data
+  })
+```
+Here's some example:
+```js
+  airbrakeMini
+  .addFilter((notice) => {
+    const { context } = notice
+    if (context.url && context.url.indexOf('file') === 0) {
+      return null
+    }
+  })
+```
+
+### Airbrake notice example:
 ```json
 {
   "id": "",
@@ -72,9 +91,9 @@ These other paramenters are mostly for testing:
     "environment": "production",
     "language": "JavaScript",
     "notifier": {
-      "name": "airbrake-js",
-      "version": "1.4.3",
-      "url": "https://github.com/airbrake/airbrake-js"
+      "name": "airbrake-mini-client",
+      "version": "0.0.3",
+      "url": "https://github.com/tes/airbrake-mini-client"
     }
   },
   "params": {},
