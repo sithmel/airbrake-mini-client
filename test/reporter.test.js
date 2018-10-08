@@ -30,15 +30,6 @@ describe('reporter', () => {
     assert.instanceOf(reporter, Reporter)
   })
 
-  it('enriches a the payload', () => {
-    var enrichedObject = reporter.enrichPayload({ test1: 1, context: { test2: 2 } })
-    assert.equal(enrichedObject.test1, 1)
-    assert.equal(enrichedObject.context.test2, 2)
-    assert.equal(enrichedObject.context.environment, 'local')
-    assert.equal(enrichedObject.context.notifier.name, 'airbrake-mini-client')
-    assert.typeOf(enrichedObject.context.userAgent, 'string')
-  })
-
   it('notifies', () => {
     reporter.notify({ test: 1 })
     assert.equal(requests.length, 1)

@@ -26,7 +26,7 @@ describe('airbrake mini', () => {
     assert.isTrue(reporter.notify.calledOnce)
     var payload = reporter.notify.args[0][0]
     assert.equal(payload.id, '')
-    assert.deepEqual(payload.context, { severity: 'error', windowError: false, history: [] })
+    assert.equal(payload.context.severity, 'error')
   })
 
   it('notifies using an object', () => {
@@ -34,7 +34,7 @@ describe('airbrake mini', () => {
     assert.isTrue(reporter.notify.calledOnce)
     var payload = reporter.notify.args[0][0]
     assert.equal(payload.id, '')
-    assert.deepEqual(payload.context, { severity: 'warning', windowError: false, history: [] })
+    assert.equal(payload.context.severity, 'warning')
   })
 
   it('filters out', () => {
@@ -58,6 +58,13 @@ describe('airbrake mini', () => {
     assert.isTrue(reporter.notify.calledOnce)
     var payload = reporter.notify.args[0][0]
     assert.equal(payload.id, 1)
-    assert.deepEqual(payload.context, { severity: 'warning', windowError: false, history: [] })
+    assert.equal(payload.context.severity, 'warning')
+  })
+
+  it('generate initial payload', () => {
+    var enrichedObject = airbrake.createInitialPayload()
+    assert.equal(enrichedObject.context.environment, 'local')
+    assert.equal(enrichedObject.context.notifier.name, 'airbrake-mini-client')
+    assert.typeOf(enrichedObject.context.userAgent, 'string')
   })
 })

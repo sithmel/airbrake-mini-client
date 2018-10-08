@@ -1,19 +1,35 @@
 var objectAssign = require('object-assign')
 var Reporter = require('./reporter')
 var stacktrace = require('./stacktrace')
+var packageJSON = require('../package.json')
+
+var NOTIFIER = {
+  name: packageJSON.name,
+  version: packageJSON.version,
+  url: 'https://github.com/tes/airbrake-mini-client'
+}
+
+var DEFAULT_ENVIRONMENT = 'local'
 
 function AirbrakeMini (config) {
   if (!(this instanceof AirbrakeMini)) {
     return new AirbrakeMini(config)
   }
+  this.environment = config.environment || DEFAULT_ENVIRONMENT
   this.reporter = config.reporter || new Reporter(config)
   this.filters = []
 }
 
-AirbrakeMini.prototype.notify = function airbrakeMiniNotify (err) {
-  var payload = {
+AirbrakeMini.prototype.createInitialPayload = function airbrakeCreateInitialPayload () {
+  return {
     id: '',
     context: {
+      notifier: NOTIFIER,
+      userAgent: window.navigator.userAgent,
+      url: window.location.href,
+      rootDirectory: window.location.protocol + '//' + window.location.host,
+      language: 'JavaScript',
+      environment: this.environment,
       severity: 'error',
       windowError: false,
       history: []
@@ -22,6 +38,10 @@ AirbrakeMini.prototype.notify = function airbrakeMiniNotify (err) {
     environment: {},
     session: {}
   }
+}
+
+AirbrakeMini.prototype.notify = function airbrakeMiniNotify (err) {
+  var payload = this.createInitialPayload()
 
   if (err instanceof Error) {
     payload.errors = [stacktrace(err)]

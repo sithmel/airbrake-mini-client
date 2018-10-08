@@ -1,10 +1,6 @@
 /* eslint-env browser */
-var packageJSON = require('../package.json')
-var objectAssign = require('object-assign')
-
 var DEFAULT_HOST = 'https://api.airbrake.io'
 var DEFAULT_TIMEOUT = 10000
-var DEFAULT_ENVIRONMENT = 'local'
 
 var errors = {
   unauthorized: 'airbrake: unauthorized: project id or key are wrong',
@@ -12,12 +8,6 @@ var errors = {
 }
 
 var rateLimitReset = 0
-
-var NOTIFIER = {
-  name: packageJSON.name,
-  version: packageJSON.version,
-  url: 'https://github.com/tes/airbrake-mini-client'
-}
 
 function Reporter (config) {
   if (!config.projectId || !config.projectKey) {
@@ -27,25 +17,9 @@ function Reporter (config) {
   this.projectKey = config.projectKey
   this.host = config.host || DEFAULT_HOST
   this.timeout = config.timeout || DEFAULT_TIMEOUT
-  this.environment = config.environment || DEFAULT_ENVIRONMENT
-}
-
-Reporter.prototype.enrichPayload = function reporterEnrichPayload (payload) {
-  var ctx = objectAssign({}, {
-    notifier: NOTIFIER,
-    userAgent: window.navigator.userAgent,
-    url: window.location.href,
-    rootDirectory: window.location.protocol + '//' + window.location.host,
-    language: 'JavaScript',
-    environment: this.environment
-  }, payload.context || {})
-
-  return objectAssign({}, payload, { context: ctx })
 }
 
 Reporter.prototype.notify = function reporterNotify (payload) {
-  var enrichedPayload = this.enrichPayload(payload)
-
   let utime = Date.now() / 1000
   if (utime < rateLimitReset) {
     console.log(errors.ipRateLimited)
@@ -102,7 +76,7 @@ Reporter.prototype.notify = function reporterNotify (payload) {
     console.log('airbrake: xhr: unexpected response: code=' + req.status + 'body=' + body)
   }
 
-  req.send(JSON.stringify(enrichedPayload))
+  req.send(JSON.stringify(payload))
 }
 
 module.exports = Reporter

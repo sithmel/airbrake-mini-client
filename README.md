@@ -67,6 +67,7 @@ Here's some example:
     if (context.url && context.url.indexOf('file') === 0) {
       return null
     }
+    return notice
   })
 ```
 
