@@ -1,11 +1,10 @@
 var objectAssign = require('object-assign')
 var Reporter = require('./reporter')
 var stacktrace = require('./stacktrace')
-var packageJSON = require('../package.json')
 
 var NOTIFIER = {
-  name: packageJSON.name,
-  version: packageJSON.version,
+  name: 'airbrake-mini-client',
+  version: '0.0.4',
   url: 'https://github.com/tes/airbrake-mini-client'
 }
 
