@@ -4,7 +4,7 @@ var stacktrace = require('./stacktrace')
 
 var NOTIFIER = {
   name: 'airbrake-mini-client',
-  version: '0.0.4',
+  version: '0.0.5',
   url: 'https://github.com/tes/airbrake-mini-client'
 }
 
