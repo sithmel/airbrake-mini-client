@@ -49,6 +49,7 @@ AirbrakeMini.prototype.notify = function airbrakeMiniNotify (err) {
     objectAssign(payload.context, err.context || {})
     objectAssign(payload.params, err.params || {})
     objectAssign(payload.session, err.session || {})
+    objectAssign(payload.environment, err.environment || {})
   }
   var filteredPayload = this._filter(payload)
   if (filteredPayload) {
