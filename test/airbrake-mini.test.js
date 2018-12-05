@@ -78,7 +78,7 @@ describe('airbrake mini', () => {
       projectId: '123',
       projectKey: '456',
       reporter: reporter,
-      window: windowOverride
+      win: windowOverride
     })
     var enrichedObject = airbrake.createInitialPayload()
 

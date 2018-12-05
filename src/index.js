@@ -4,7 +4,7 @@ var stacktrace = require('./stacktrace')
 
 var NOTIFIER = {
   name: 'airbrake-mini-client',
-  version: '0.0.6',
+  version: '0.0.7',
   url: 'https://github.com/tes/airbrake-mini-client'
 }
 
@@ -17,7 +17,7 @@ function AirbrakeMini (config) {
   this.environment = config.environment || DEFAULT_ENVIRONMENT
   this.reporter = config.reporter || new Reporter(config)
   this.filters = []
-  this.window = config.window || window;
+  this.win = config.win || window
 }
 
 AirbrakeMini.prototype.createInitialPayload = function airbrakeCreateInitialPayload () {
@@ -25,9 +25,9 @@ AirbrakeMini.prototype.createInitialPayload = function airbrakeCreateInitialPayl
     id: '',
     context: {
       notifier: NOTIFIER,
-      userAgent: this.window.navigator.userAgent,
-      url: this.window.location.href,
-      rootDirectory: this.window.location.protocol + '//' + this.window.location.host,
+      userAgent: this.win.navigator.userAgent,
+      url: this.win.location.href,
+      rootDirectory: this.win.location.protocol + '//' + this.win.location.host,
       language: 'JavaScript',
       environment: this.environment,
       severity: 'error',

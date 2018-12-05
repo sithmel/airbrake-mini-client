@@ -50,6 +50,7 @@ These other paramenters are mostly for testing:
 * timeout: timeout for XMLHttpRequest
 * host: it defaults to airbrake host
 * reporter: an object providing a "notify" method
+* win: the window global object (default to the current window)
 
 ### Filters
 You can use this feature to avoid sending an error to the server if it matches some criteria. You can also use this function to enrich the notice with specific informations. You can add as many filters you want. The method is chainable.

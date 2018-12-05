@@ -17,6 +17,7 @@ function Reporter (config) {
   this.projectKey = config.projectKey
   this.host = config.host || DEFAULT_HOST
   this.timeout = config.timeout || DEFAULT_TIMEOUT
+  this.win = config.win || window
 }
 
 Reporter.prototype.notify = function reporterNotify (payload) {
@@ -26,7 +27,7 @@ Reporter.prototype.notify = function reporterNotify (payload) {
   }
 
   var url = this.host + '/api/v3/projects/' + this.projectId + '/notices?key=' + this.projectKey
-  let req = new XMLHttpRequest()
+  let req = new this.win.XMLHttpRequest()
   req.open('POST', url, true)
   req.timeout = this.timeout
   req.onreadystatechange = function () {
