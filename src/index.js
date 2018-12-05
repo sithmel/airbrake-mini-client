@@ -17,6 +17,7 @@ function AirbrakeMini (config) {
   this.environment = config.environment || DEFAULT_ENVIRONMENT
   this.reporter = config.reporter || new Reporter(config)
   this.filters = []
+  this.window = config.window || window;
 }
 
 AirbrakeMini.prototype.createInitialPayload = function airbrakeCreateInitialPayload () {
@@ -24,9 +25,9 @@ AirbrakeMini.prototype.createInitialPayload = function airbrakeCreateInitialPayl
     id: '',
     context: {
       notifier: NOTIFIER,
-      userAgent: window.navigator.userAgent,
-      url: window.location.href,
-      rootDirectory: window.location.protocol + '//' + window.location.host,
+      userAgent: this.window.navigator.userAgent,
+      url: this.window.location.href,
+      rootDirectory: this.window.location.protocol + '//' + this.window.location.host,
       language: 'JavaScript',
       environment: this.environment,
       severity: 'error',
