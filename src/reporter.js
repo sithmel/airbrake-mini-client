@@ -21,13 +21,13 @@ function Reporter (config) {
 }
 
 Reporter.prototype.notify = function reporterNotify (payload) {
-  let utime = Date.now() / 1000
+  var utime = Date.now() / 1000
   if (utime < rateLimitReset) {
     console.log(errors.ipRateLimited)
   }
 
   var url = this.host + '/api/v3/projects/' + this.projectId + '/notices?key=' + this.projectKey
-  let req = new this.win.XMLHttpRequest()
+  var req = new this.win.XMLHttpRequest()
   req.open('POST', url, true)
   req.timeout = this.timeout
   req.onreadystatechange = function () {
